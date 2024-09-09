@@ -24,6 +24,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {useSelector} from 'react-redux';
+import {RootState} from './store/store';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -55,12 +57,14 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   );
 }
 
-function App(): React.JSX.Element {
+const App = (): React.JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  const counter = useSelector((state: RootState) => state.counter.value);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -79,6 +83,7 @@ function App(): React.JSX.Element {
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
+            <Text>{counter}</Text>
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
@@ -94,7 +99,7 @@ function App(): React.JSX.Element {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   sectionContainer: {
